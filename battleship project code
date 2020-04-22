@@ -1,0 +1,146 @@
+import java.util.Scanner;
+
+public class battle
+{
+    static int usingMathClass()
+    {
+        double randomDouble=Math.random();
+        randomDouble = (randomDouble * 9);
+        int randomInt= (int)randomDouble;
+        return randomInt;
+    }
+    public static void main(String args[])
+    {
+        Scanner sc=new Scanner(System.in);
+        String a[][]=new String[10][10];
+        System.out.println("****Welcome to Battle Ships game ****");
+        System.out.println();
+        System.out.println("Right now,the sea is empty.");
+        System.out.println();
+        System.out.println("   0123456789   ");
+        for(int i=0;i<10;i++)
+        {
+            System.out.print(i + " " + "|");
+            for(int j=0;j<10;j++)
+            {
+                a[i][j]=" ";
+                System.out.print(a[i][j]);
+            }
+            System.out.print("|"+ " "+i);
+            System.out.println();
+        }
+        System.out.println("   0123456789   ");
+        System.out.println("Deploy your ships:");
+        for(int i=1;i<=5;i++)
+        {
+            System.out.println("Enter X cooridinate for your "+i+". ship: ");
+            int x=sc.nextInt();
+            System.out.println("Enter Y cooridinate for your "+i+". ship: ");
+            int y=sc.nextInt();
+            a[x][y]="@";
+        }
+        System.out.println("   0123456789   ");
+        for(int i=0;i<10;i++)
+        {
+            System.out.print(i + " " + "|");
+            for(int j=0;j<10;j++)
+            {
+                System.out.print(a[i][j]);
+            }
+            System.out.print("|"+ " "+i);
+            System.out.println();
+        }
+        System.out.println("   0123456789   ");
+        System.out.println("Computer is deploying ships");
+        for(int i=1;i<=5;i++)
+        {
+            boolean b=true;
+            while(b)
+            {
+                int x=usingMathClass();
+                int y=usingMathClass();
+                if(a[x][y]==" ")
+                {
+                    b=false;
+                    a[x][y]="2";
+                }
+            }
+            System.out.println(i+". ship DEPLOYED");
+            b=true;
+        }
+        boolean b=true;
+        int c=5,d=5;
+        while(c!=0 && d!=0)
+        {
+            while (b==true)
+            {
+                System.out.println("YOUR TURN");
+                System.out.println("Enter X coordinate: ");
+                int x = sc.nextInt();
+                System.out.println("Enter Y coordinate: ");
+                int y = sc.nextInt();
+                if (a[x][y] == "2") {
+                    System.out.println("Boom! You sunk the ship!");
+                    a[x][y] = "!";
+                    b = false;
+                    d--;
+                } else if (a[x][y] == "@") {
+                    System.out.println("Oh no, you sunk your own ship :(");
+                    a[x][y] = "x";
+                    b = false;
+                    c--;
+                } else if (a[x][y] == " ") {
+                    System.out.println("Sorry, you missed");
+                    a[x][y] = "-";
+                    b = false;
+                }
+            }
+            b=true;
+            while (b==true)
+            {
+                System.out.println("COMPUTER'S TURN");
+                int x = usingMathClass();
+                int y = usingMathClass();
+                if (a[x][y] == "2") {
+                    System.out.println("The Computer sunk one of its own ships");
+                    a[x][y] = "!";
+                    b = false;
+                    d--;
+                } else if (a[x][y] == "@") {
+                    System.out.println("The Computer sunk one of your ships!");
+                    a[x][y] = "x";
+                    b = false;
+                    c--;
+                } else if (a[x][y] == " ") {
+                    System.out.println("Computer missed");
+                    b = false;
+                }
+            }
+            b=true;
+        }
+        System.out.println("Game Over");
+        for(int i=0;i<10;i++)
+        {
+            System.out.print(i + " " + "|");
+            for(int j=0;j<10;j++)
+            {
+                if(a[i][j]!="2")
+                System.out.print(a[i][j]);
+                else
+                    System.out.print(" ");
+            }
+            System.out.print("|"+ " "+i);
+            System.out.println();
+        }
+        if(c==0)
+        {
+            System.out.println("Your Ships: "+c+" | "+"Computer ships: "+d);
+            System.out.println("You Lost :(");
+        }
+        else if(d==0)
+        {
+            System.out.println("Your Ships: "+c+" | "+"Computer ships: "+d);
+            System.out.println("You Won :)");
+        }
+    }
+}
